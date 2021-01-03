@@ -83,4 +83,40 @@
 </body>
 </html>
 
+<script>
 
+    $("button").on("click",posaljiZahtev);
+
+    function posaljiZahtev(){
+        if($("input[name=odabir_tabele]:checked").length!=0 && $("input[name=http_zahtev]:checked").length!=0){
+            var tabela=$("input[name=odabir_tabele]:checked")[0].id;
+            switch ($("input[name=odabir_zahtev]:checked")[0].id){
+                case "get":
+                    if(tabela=="radio_novosti"){
+                        $.getJSON("http://localhost:8081/rest/rest/novosti",function(data){
+                            document.getElementById("get_odgovor").innerHTML=JSON.stringify(data,null,2);
+                        });
+                    }else{
+                        $.getJSON("http://localhost:8081/rest/rest/kategorije",function(data){
+                            document.getElementById("get_odgovor").innerHTML=JSON.stringify(data,null,2);
+                        });
+                    }
+                    break;
+
+                    case "post":
+                        if(tabela=="radio_novosti"){
+                            var values={
+                                "naslov":$("input[name=naslov_novosti]").val(),
+                                "tekst":$("#tekst_novosti").val(),
+                                "kategorija":parseInt($("#kategorija_odabir").val()),
+                            };
+                            console.log(values);
+                            $.post()
+                        }
+
+                    default:
+                        console.log("def");
+            }
+        }
+    }
+</script>
